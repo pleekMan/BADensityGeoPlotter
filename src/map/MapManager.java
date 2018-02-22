@@ -6,6 +6,7 @@ import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.interactions.MouseHandler;
 import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 import de.fhpotsdam.unfolding.utils.MapUtils;
+import de.fhpotsdam.unfolding.utils.ScreenPosition;
 import globals.Main;
 import globals.ProcessingSingleton;
 
@@ -48,6 +49,33 @@ public class MapManager {
 
 	public void renderMap() {
 		map.draw();
+		
+		ScreenPosition posBerlin = map.getScreenPosition(locationBerlin);
+		p5.fill(0, 200, 0, 100);
+		p5.ellipse(posBerlin.x, posBerlin.y, 20, 20);
+
+		// Zoom dependent marker size
+		ScreenPosition posLondon = map.getScreenPosition(locationLondon);
+		p5.fill(200, 0, 0, 100);
+		float s = map.getZoom();
+		p5.ellipse(posLondon.x, posLondon.y, s, s);
+		
+		/*
+		for (int i = 0; i < locations.length; i++) {
+			ScreenPosition thisMarker = mapManager.getMap().getScreenPosition(locations[i]);
+			fill(0, 0, 255, 127);
+			ellipse(thisMarker.x, thisMarker.y, 5, 5);
+		}
+
+		ScreenPosition topLeftCorner = mapManager.getMap().getScreenPosition(new Location(topLatitude, leftLongitude));
+		ScreenPosition bottomRightCorner = mapManager.getMap().getScreenPosition(new Location(bottomLatitude, rightLongitude));
+
+		//fill(255,0,0);
+		noFill();
+		stroke(255, 0, 0);
+		rect(topLeftCorner.x, topLeftCorner.y, bottomRightCorner.x - topLeftCorner.x, bottomRightCorner.y - topLeftCorner.y);
+		popMatrix();
+		*/
 	}
 
 	public UnfoldingMap getMap() {
@@ -69,6 +97,9 @@ public class MapManager {
 	public void panAndZoomToBuenosAires(){
 		map.panTo(new Location(-34.6116725,-58.4435955));
 		map.zoomToLevel(5);
+	}
 	
+	public void printCurrentCoordinates(){
+		p5.println("Map Center at: LAT " + map.getCenter().getLat() + " | LON " + map.getCenter().getLon());
 	}
 }

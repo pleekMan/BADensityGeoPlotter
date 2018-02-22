@@ -8,18 +8,19 @@ import de.fhpotsdam.unfolding.geo.*;
 import de.fhpotsdam.unfolding.utils.*;
 import de.fhpotsdam.unfolding.providers.*;
 
-import peasy.*;
+
 
 public class Main extends PApplet {
 
-	MapManager mapManager;
+	//MapManager mapManager;
+	AppManager appManager;
+	
+	//PeasyCam cam;
 
-	PeasyCam cam;
+	//Location locationBerlin = new Location(52.5f, 13.4f);
+	//Location locationLondon = new Location(51.5f, 0f);
 
-	Location locationBerlin = new Location(52.5f, 13.4f);
-	Location locationLondon = new Location(51.5f, 0f);
-
-	Location[] locations;
+	//Location[] locations;
 
 	float leftLongitude = 999;
 	float rightLongitude = -999;
@@ -36,16 +37,21 @@ public class Main extends PApplet {
 		size(800, 800, P3D);
 		frameRate(30);
 		setProcessingSingleton();
-
+		
+		appManager = new AppManager();
+		
 		//MAP MANAGER
-		mapManager = new MapManager();
+		//mapManager = new MapManager();
 
 		// 3D CAMERA
+		/*
 		cam = new PeasyCam(this, width);
 		cam.setMinimumDistance(20);
 		cam.setMaximumDistance(3000);
-
+		*/
+		
 		// DATA MANAGEMENT
+		/*
 		String[] dataLines = loadStrings("atencion-ciudadana-2017_short.csv");
 		locations = new Location[dataLines.length];
 		println("DataSize: " + locations.length);
@@ -74,6 +80,8 @@ public class Main extends PApplet {
 		println("TOP: " + topLatitude);
 
 		//map = new UnfoldingMap(this, new Google.GoogleMapProvider());
+		 * 
+		 */
 
 	}
 
@@ -81,14 +89,14 @@ public class Main extends PApplet {
 		background(0);
 		noStroke();
 
-		pushMatrix();
-		translate(-(width * 0.5f), -(height * 0.5f));
+		appManager.render();
 
-		mapManager.renderMap();
+		//mapManager.renderMap();
 
 		// Draws locations on screen positions according to their geo-locations.
 
 		// Fixed-size marker
+		/*
 		ScreenPosition posBerlin = mapManager.getMap().getScreenPosition(locationBerlin);
 		fill(0, 200, 0, 100);
 		ellipse(posBerlin.x, posBerlin.y, 20, 20);
@@ -98,37 +106,15 @@ public class Main extends PApplet {
 		fill(200, 0, 0, 100);
 		float s = mapManager.getMap().getZoom();
 		ellipse(posLondon.x, posLondon.y, s, s);
-
+		*/
 		//------------------
 
-		for (int i = 0; i < locations.length; i++) {
-			ScreenPosition thisMarker = mapManager.getMap().getScreenPosition(locations[i]);
-			fill(0, 0, 255, 127);
-			ellipse(thisMarker.x, thisMarker.y, 5, 5);
-		}
 
-		ScreenPosition topLeftCorner = mapManager.getMap().getScreenPosition(new Location(topLatitude, leftLongitude));
-		ScreenPosition bottomRightCorner = mapManager.getMap().getScreenPosition(new Location(bottomLatitude, rightLongitude));
-
-		//fill(255,0,0);
-		noFill();
-		stroke(255, 0, 0);
-		rect(topLeftCorner.x, topLeftCorner.y, bottomRightCorner.x - topLeftCorner.x, bottomRightCorner.y - topLeftCorner.y);
-		popMatrix();
 	}
 
 	public void keyPressed() {
-		if (key == 'a') {
-			mapManager.enableMouseInteraction(!mapManager.enableMouseInteraction);
-		}
+		appManager.keyPressed(key);
 
-		if (key == 'c') {
-			cam.setActive(!cam.isActive());
-		}
-		
-		if (key == 'b') {
-			mapManager.panAndZoomToBuenosAires();
-		}
 	}
 
 	public void mousePressed() {
