@@ -3,6 +3,7 @@ package globals;
 import map.MapManager;
 import dataManagement.DataManager;
 import peasy.*;
+import viz.VizManager;
 
 public class AppManager {
 
@@ -10,6 +11,7 @@ public class AppManager {
 	PeasyCam camera;
 	DataManager dataManager;
 	MapManager mapManager;
+	VizManager vizManager;
 	
 	public AppManager(){
 		p5 = ProcessingSingleton.getInstance().getProcessingSingleton();
@@ -18,12 +20,19 @@ public class AppManager {
 	
 	public void init(){
 		
+		// DATA
 		dataManager = new DataManager();
 		loadDataSets();
 		
+		//VIZ
+		vizManager = new VizManager();
+		
+		// MAP
 		mapManager = new MapManager();
 		mapManager.enableMouseInteraction(true);
+		mapManager.setVizManager(vizManager);
 		
+		//3D CAMERA
 		camera = new PeasyCam(p5, p5.width);
 		camera.setMinimumDistance(20);
 		camera.setMaximumDistance(3000);
@@ -39,7 +48,7 @@ public class AppManager {
 	}
 
 	public void update(){
-		
+		vizManager.update();
 	}
 	
 	public void render(){
@@ -47,7 +56,10 @@ public class AppManager {
 		p5.pushMatrix();
 		p5.translate(-(p5.width * 0.5f), -(p5.height * 0.5f));
 		
-		drawMap();
+		mapManager.renderMap();
+		vizManager.render();
+		
+
 		
 		p5.popMatrix();
 		

@@ -40,6 +40,7 @@ public class Main extends PApplet {
 		
 		appManager = new AppManager();
 		
+		
 		//MAP MANAGER
 		//mapManager = new MapManager();
 
@@ -88,7 +89,8 @@ public class Main extends PApplet {
 	public void draw() {
 		background(0);
 		noStroke();
-
+		
+		appManager.update();
 		appManager.render();
 
 		//mapManager.renderMap();
