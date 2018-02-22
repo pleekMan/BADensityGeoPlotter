@@ -23,6 +23,9 @@ public class Grid {
 		
 		p5 = ProcessingSingleton.getInstance().getProcessingSingleton();
 		
+		// THE nodes PVector could by arranged this way:
+		// x: normX, y: normY, z:value after density calculation
+		
 		nodes = new ArrayList<PVector>();
 		geoLocations = new ArrayList<Location>();
 		screenLocations = new ArrayList<ScreenPosition>();
@@ -30,6 +33,8 @@ public class Grid {
 		hRes = vRes = 30;
 		origin = new PVector();
 		size = new PVector();
+		
+		createGrid();
 	}
 	
 	public void update(){
@@ -41,6 +46,25 @@ public class Grid {
 	
 	public void createGrid(){
 		
+		float resUnit = 1.0f / hRes;
+		float x = 0;
+		float y = 0;
+		for (int i = 0; i < hRes * vRes; i++) {
+			
+			PVector newNode = new PVector(x,y,0);
+			nodes.add(newNode);
+
+			if((i%hRes) >= hRes - 1){
+				x = 0;
+				y += resUnit;
+			} else {
+				x+= resUnit;
+			}
+		}
+	}
+	
+	public ArrayList<PVector> getNodes(){
+		return nodes;
 	}
 	
 	public void populateGeoLocations(ArrayList<Location> locs){

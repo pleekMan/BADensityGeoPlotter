@@ -2,6 +2,7 @@ package map;
 
 import java.util.ArrayList;
 
+import processing.core.PVector;
 import viz.VizManager;
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.events.*;
@@ -81,11 +82,37 @@ public class MapManager {
 		
 		drawMarkers(vizManager.grid.getGeoLocations());
 		
+		drawVizNodes();
+		
 
 	}
 
 	public UnfoldingMap getMap() {
 		return map;
+	}
+	
+	public void drawVizNodes(){
+		ArrayList<PVector> nodes = vizManager.grid.getNodes();
+		
+		for (int i = 0; i < nodes.size(); i++) {
+			float geoX = p5.map(nodes.get(i).x, 0, 1, vizManager.MAP_BOUNDS.GEO_LEFT, vizManager.MAP_BOUNDS.GEO_RIGHT);
+			float geoY = p5.map(nodes.get(i).y, 0, 1, vizManager.MAP_BOUNDS.GEO_TOP, vizManager.MAP_BOUNDS.GEO_BOTTOM);
+			
+			ScreenPosition newPos = map.getScreenPosition(new Location(geoX, geoY));
+			
+			p5.fill(255,0,0);
+			p5.noStroke();
+			
+			p5.pushMatrix();
+			p5.translate(0, 0, 10);
+			p5.rect(newPos.x, newPos.y, 20, 20);
+			p5.popMatrix();
+			
+			if(i ==0){
+				p5.stroke(255,0,0);
+				p5.line(p5.mouseX, p5.mouseY, newPos.x, newPos.y);
+			}
+		}
 	}
 	
 	public void drawMarkers(ArrayList<Location> geoLocations){
