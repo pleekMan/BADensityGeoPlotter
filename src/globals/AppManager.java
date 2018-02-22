@@ -26,6 +26,8 @@ public class AppManager {
 		
 		//VIZ
 		vizManager = new VizManager();
+		vizManager.createNewGrid(dataManager.getDataSetById(0));
+		
 		
 		// MAP
 		mapManager = new MapManager();
@@ -44,10 +46,11 @@ public class AppManager {
 		
 		//MANUALLY CHECK FIRST ROW OF FIRST DATASET
 		String[] dataSetRow0 = dataManager.getDataSetById(0).getRowAsArray(0);
-		p5.printArray(dataSetRow0);
+		//p5.printArray(dataSetRow0);
 	}
 
 	public void update(){
+		mapManager.update();
 		vizManager.update();
 	}
 	

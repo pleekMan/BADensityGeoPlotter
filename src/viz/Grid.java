@@ -39,6 +39,19 @@ public class Grid {
 		
 	}
 	
+	public void createGrid(){
+		
+	}
+	
+	public void populateGeoLocations(ArrayList<Location> locs){
+		geoLocations = locs;
+		p5.println("-|| GeoLocations.size() in Grid: " + geoLocations.size());
+	}
+	
+	public ArrayList<Location> getGeoLocations(){
+		return geoLocations;
+	}
+	
 	public void setOrigin(float x, float y){
 		origin.set(x, y, 0);
 	}

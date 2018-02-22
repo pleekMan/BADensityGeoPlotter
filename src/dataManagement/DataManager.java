@@ -3,6 +3,7 @@ package dataManagement;
 import java.util.ArrayList;
 
 import processing.data.Table;
+import processing.data.TableRow;
 //import de.fhpotsdam.unfolding.geo.Location;
 import globals.Main;
 import globals.ProcessingSingleton;
@@ -19,39 +20,20 @@ public class DataManager {
 	public void loadDataSet(String pathInDataFolder){
 		
 		Table newTable = new Table();
-		newTable = p5.loadTable(pathInDataFolder);
+		//newTable = p5.loadTable(pathInDataFolder);
+		// TURNING THE semiColonSeparatedValue FILE INTO CSV BREAKS IT (SOME FIELDS HAVE COMAS)
+		// THEREFORE, loadTable IS USELESS, SINCE IT ONLY ACCEPTS csv, tsv or binaries.
+		
+		String[] fileLines = p5.loadStrings(pathInDataFolder);
+		for (String line : fileLines) {
+			String[] fields = p5.split(line, ';');
+			TableRow newRow = newTable.addRow(fields);
+		}
+		
 		String dataSetName = pathInDataFolder.substring(0, pathInDataFolder.length() - 3);
 		DataSet newDataSet = new DataSet(dataSetName, newTable);
 		dataSets.add(newDataSet);
-		
-		/*
-		String[] dataLines = loadStrings("atencion-ciudadana-2017_short.csv");
-		locations = new Location[dataLines.length];
-		println("DataSize: " + locations.length);
-		
-		// NO HEADERS ON THIS CSV
-		for (int i = 0; i < dataLines.length; i++) {
-			String[] data = split(dataLines[i], ";");
-			float lat = Float.parseFloat(data[13]);
-			float lng = Float.parseFloat(data[14]);
-			//println("Lat: "+lat+"\nLong: "+lng);
-			locations[i] = new Location(lat, lng);
 
-			if (lng < leftLongitude)
-				leftLongitude = lng;
-			if (lng > rightLongitude)
-				rightLongitude = lng;
-			if (lat < bottomLatitude)
-				bottomLatitude = lat;
-			if (lat > topLatitude)
-				topLatitude = lat;
-		}
-
-		println("LEFT: " + leftLongitude);
-		println("RIGHT: " + rightLongitude);
-		println("BOTTOM: " + bottomLatitude);
-		println("TOP: " + topLatitude);
-		*/
 	}
 	
 	public DataSet getDataSetByName(String dataSetName){
@@ -72,4 +54,5 @@ public class DataManager {
 	private DataSet getDataSet(int idInList){
 		return dataSets.get(idInList);
 	}
+	
 }

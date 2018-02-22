@@ -1,10 +1,13 @@
 package map;
 
+import java.util.ArrayList;
+
 import viz.VizManager;
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.events.*;
 import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.interactions.MouseHandler;
+import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import de.fhpotsdam.unfolding.utils.ScreenPosition;
@@ -22,11 +25,13 @@ public class MapManager {
 	
 	VizManager vizManager;
 
-	Location locationBerlin = new Location(52.5f, 13.4f);
-	Location locationLondon = new Location(51.5f, 0f);
+//	Location locationBerlin = new Location(52.5f, 13.4f);
+//	Location locationLondon = new Location(51.5f, 0f);
 	
 	Location BairesTopLeft;
 	Location BairesBottomRight;
+	
+	ArrayList<Marker> markers;
 
 	public MapManager() {
 		p5 = ProcessingSingleton.getInstance().getProcessingSingleton();
@@ -54,9 +59,10 @@ public class MapManager {
 	}
 
 	public void renderMap() {
-		
 		map.draw();
-		
+
+		/// --- TEST BEGIN
+		/*
 		ScreenPosition posBerlin = map.getScreenPosition(locationBerlin);
 		p5.fill(0, 200, 0, 100);
 		p5.ellipse(posBerlin.x, posBerlin.y, 20, 20);
@@ -66,50 +72,43 @@ public class MapManager {
 		p5.fill(200, 0, 0, 100);
 		float s = map.getZoom();
 		p5.ellipse(posLondon.x, posLondon.y, s, s);
-		
+		*/
+		/// --- TEST END
 		
 		//---------
 		
 		drawBuenosAiresScreenBounds();
 		
-
+		drawMarkers(vizManager.grid.getGeoLocations());
 		
-		//float GEO_LEFT = -58.536470f;
-		//float GEO_TOP = -34.526591f;
-		
-		//ScreenPosition topLeft = getScreenPositionForGeo(new Location(GEO_TOP,GEO_LEFT));
-		//p5.ellipse(topLeft.x,topLeft.y, 20,20);
-		
-//		map.draw();
 
-		
-		/*
-		for (int i = 0; i < locations.length; i++) {
-			ScreenPosition thisMarker = mapManager.getMap().getScreenPosition(locations[i]);
-			fill(0, 0, 255, 127);
-			ellipse(thisMarker.x, thisMarker.y, 5, 5);
-		}
-
-		ScreenPosition topLeftCorner = mapManager.getMap().getScreenPosition(new Location(topLatitude, leftLongitude));
-		ScreenPosition bottomRightCorner = mapManager.getMap().getScreenPosition(new Location(bottomLatitude, rightLongitude));
-
-		//fill(255,0,0);
-		noFill();
-		stroke(255, 0, 0);
-		rect(topLeftCorner.x, topLeftCorner.y, bottomRightCorner.x - topLeftCorner.x, bottomRightCorner.y - topLeftCorner.y);
-		popMatrix();
-		*/
 	}
 
 	public UnfoldingMap getMap() {
 		return map;
 	}
 	
+	public void drawMarkers(ArrayList<Location> geoLocations){
+		
+		for (Location location : geoLocations) {
+			ScreenPosition newMarker = map.getScreenPosition(location);
+			
+			p5.noStroke();
+			p5.fill(0,200,127);
+			
+			p5.pushMatrix();
+			p5.translate(0, 0, 2);
+			p5.rect(newMarker.x - 5, newMarker.y - 5, 10,10);
+			p5.popMatrix();
+		}
+		
+	}
+	
 	public void drawBuenosAiresScreenBounds(){
 		ScreenPosition topLeft = map.getScreenPosition(BairesTopLeft);
 		ScreenPosition bottomRight = map.getScreenPosition(BairesBottomRight);
 
-		p5.fill(255,127);
+		p5.noFill();
 		p5.stroke(255,0,0);
 		p5.rect(topLeft.x,topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
 		p5.ellipse(topLeft.x,topLeft.y, 20,20);
@@ -123,7 +122,7 @@ public class MapManager {
 	}
 
 	public void enableMouseInteraction(boolean state) {
-		p5.println("Map Mouse Interaction: " + state);
+		p5.println("Map: Mouse Interaction: " + state);
 		enableMouseInteraction = state;
 		if (enableMouseInteraction) {
 			eventDispatcher.register(map, PanMapEvent.TYPE_PAN, map.getId());
