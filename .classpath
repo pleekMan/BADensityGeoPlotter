@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Projects/EclipseWorkSpace/libraries/unfolding_v0.9.6 (Processing 2)/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/unfolding_v0.9.6 (Processing 2)/lib/json4processing.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/unfolding_v0.9.6 (Processing 2)/lib/libTUIO.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/unfolding_v0.9.6 (Processing 2)/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/unfolding_v0.9.6 (Processing 2)/lib/sqlite-jdbc-3.7.2.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/unfolding_v0.9.6 (Processing 2)/lib/unfolding.0.9.6.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/core.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/gluegen-rt-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/gluegen-rt-natives-linux-armv6hf.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/gluegen-rt-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/gluegen-rt-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/jogl-all-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/jogl-all-natives-linux-armv6hf.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/jogl-all-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/jogl-all-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/jogl-all-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/jogl-all.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/peasycam v2.0 (Processing 2)/library/peasycam.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
