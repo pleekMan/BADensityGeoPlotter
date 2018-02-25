@@ -15,7 +15,7 @@ public class VizManager {
 	Main p5;
 	MapManager mapManager;
 
-	public MapBounds MAP_BOUNDS;
+	public static MapBounds MAP_BOUNDS;
 
 	public Grid grid;
 
@@ -32,6 +32,7 @@ public class VizManager {
 	}
 
 	public void update() {
+		grid.update();
 	}
 
 	public void render() {
@@ -80,15 +81,15 @@ public class VizManager {
 	
 	public void createNewGrid(DataSet ds){
 		// DO FOR MULTIPLE GRIDS
-		grid.populateGeoLocations(extractLocations(ds));
+		grid.populateGeoLocations(extractGeoLocations(ds));
 	}
 	
-	public ArrayList<Location> extractLocations(DataSet data){
+	public ArrayList<Location> extractGeoLocations(DataSet data){
 		ArrayList<Location> locations = new ArrayList<Location>();
 		
 		for (int i = 0; i < data.getData().getRowCount(); i++) {
 			String[] row = data.getRowAsArray(i);
-			p5.println(row[13], row[14]);
+			//p5.println(row[13], row[14]);
 
 			float lat = Float.parseFloat(row[13]);
 			float lon = Float.parseFloat(row[14]);

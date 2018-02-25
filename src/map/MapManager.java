@@ -56,12 +56,14 @@ public class MapManager {
 	}
 
 	public void update() {
-
+		
 	}
 
 	public void renderMap() {
 		map.draw();
-
+		
+		
+		
 		/// --- TEST BEGIN
 		/*
 		ScreenPosition posBerlin = map.getScreenPosition(locationBerlin);
@@ -80,9 +82,10 @@ public class MapManager {
 		
 		drawBuenosAiresScreenBounds();
 		
-		drawMarkers(vizManager.grid.getGeoLocations());
 		
-		drawVizNodes();
+		//convertGridGeosToScreen();
+		drawMarkers();
+		drawVizNodes2();
 		
 
 	}
@@ -91,14 +94,62 @@ public class MapManager {
 		return map;
 	}
 	
-	public void drawVizNodes(){
-		ArrayList<PVector> nodes = vizManager.grid.getNodes();
+	public void convertGridGeosToScreen(){
+		
+		ArrayList<PVector> nodes = vizManager.grid.getGridNodes();
 		
 		for (int i = 0; i < nodes.size(); i++) {
 			float geoX = p5.map(nodes.get(i).x, 0, 1, vizManager.MAP_BOUNDS.GEO_LEFT, vizManager.MAP_BOUNDS.GEO_RIGHT);
 			float geoY = p5.map(nodes.get(i).y, 0, 1, vizManager.MAP_BOUNDS.GEO_TOP, vizManager.MAP_BOUNDS.GEO_BOTTOM);
 			
-			ScreenPosition newPos = map.getScreenPosition(new Location(geoX, geoY));
+			ScreenPosition newPos = map.getScreenPosition(new Location(geoY,geoX));
+			
+			//TODO I AM MIXING THE MARKERS POSITIONS WITH THE NODES POSITION..!!!!!
+			// MAN, COME ON..!!
+			
+			
+			vizManager.grid.setScreenLocation(i, newPos);
+		}
+		
+		
+		
+	}
+	
+	public void drawVizNodes2(){
+		ArrayList<PVector> geoGridNodes = vizManager.grid.getGridNodes();
+		
+		for (int i = 0; i < geoGridNodes.size(); i++) {
+			
+			ScreenPosition screenGridNode = map.getScreenPosition(new Location(geoGridNodes.get(i).y, geoGridNodes.get(i).x));
+			
+			//p5.fill(255,0,0);
+			//p5.noStroke();
+			p5.noFill();
+			p5.stroke(255,0,0);
+			
+			p5.pushMatrix();
+			p5.translate(0, 0, 1 + geoGridNodes.get(i).z);
+			p5.rect(screenGridNode.x, screenGridNode.y, 20, 20);
+			p5.popMatrix();
+			
+			/*
+			if(i ==0){
+				p5.stroke(255,0,0);
+				p5.line(p5.mouseX, p5.mouseY, newPos.x, newPos.y);
+			}
+			*/
+		}
+	}
+	
+	@Deprecated
+	public void drawVizNodes(){
+		ArrayList<PVector> nodes = vizManager.grid.getGridNodes();
+		
+		for (int i = 0; i < nodes.size(); i++) {
+			float geoX = p5.map(nodes.get(i).x, 0, 1, vizManager.MAP_BOUNDS.GEO_LEFT, vizManager.MAP_BOUNDS.GEO_RIGHT);
+			float geoY = p5.map(nodes.get(i).y, 0, 1, vizManager.MAP_BOUNDS.GEO_TOP, vizManager.MAP_BOUNDS.GEO_BOTTOM);
+			
+			ScreenPosition newPos = map.getScreenPosition(new Location(geoY,geoX));
 			
 			p5.fill(255,0,0);
 			p5.noStroke();
@@ -115,8 +166,19 @@ public class MapManager {
 		}
 	}
 	
-	public void drawMarkers(ArrayList<Location> geoLocations){
+	public void drawMarkers(){
 		
+		for (ScreenPosition screenPosition : vizManager.grid.getScreenLocations()) {
+			p5.noStroke();
+			p5.fill(0,200,127);
+			
+			p5.pushMatrix();
+			p5.translate(0, 0, 2);
+			p5.rect(screenPosition.x - 5, screenPosition.y - 5, 10,10);
+			p5.popMatrix();
+		}
+		
+		/*
 		for (Location location : geoLocations) {
 			ScreenPosition newMarker = map.getScreenPosition(location);
 			
@@ -128,6 +190,7 @@ public class MapManager {
 			p5.rect(newMarker.x - 5, newMarker.y - 5, 10,10);
 			p5.popMatrix();
 		}
+		*/
 		
 	}
 	
