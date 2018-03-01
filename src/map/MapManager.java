@@ -85,7 +85,7 @@ public class MapManager {
 		
 		//convertGridGeosToScreen();
 		drawMarkers();
-		drawVizNodes2();
+		drawVizNodes3();
 		
 
 	}
@@ -103,10 +103,6 @@ public class MapManager {
 			float geoY = p5.map(nodes.get(i).y, 0, 1, vizManager.MAP_BOUNDS.GEO_TOP, vizManager.MAP_BOUNDS.GEO_BOTTOM);
 			
 			ScreenPosition newPos = map.getScreenPosition(new Location(geoY,geoX));
-			
-			//TODO I AM MIXING THE MARKERS POSITIONS WITH THE NODES POSITION..!!!!!
-			// MAN, COME ON..!!
-			
 			
 			vizManager.grid.setScreenLocation(i, newPos);
 		}
@@ -139,6 +135,42 @@ public class MapManager {
 			}
 			*/
 		}
+	}
+	
+	public void drawVizNodes3(){
+		
+		ArrayList<PVector> geoGridNodes = vizManager.grid.getGridNodes();
+		
+		int xRes = vizManager.grid.getHorizontalRes();
+		int yRes = vizManager.grid.getVerticalRes();
+		
+		
+		p5.stroke(0,127,200);
+		p5.strokeWeight(0.5f);
+		p5.fill(0,127,200,50);
+		
+		for (int y = 0; y < yRes - 1; y++) {
+			
+			p5.beginShape(p5.QUAD_STRIP);
+		
+			for (int x = 0; x < xRes; x++) {
+				int indexA = x + (y * xRes);
+				int indexB = x + ((y+1) * xRes);
+				ScreenPosition pointA = map.getScreenPosition(new Location(geoGridNodes.get(indexA).y, geoGridNodes.get(indexA).x));
+				ScreenPosition pointB = map.getScreenPosition(new Location(geoGridNodes.get(indexB).y, geoGridNodes.get(indexB).x));
+				pointA.z = geoGridNodes.get(indexA).z;
+				pointB.z = geoGridNodes.get(indexB).z;
+				
+				p5.vertex(pointA.x, pointA.y, pointA.z + 1);
+				p5.vertex(pointB.x, pointB.y, pointB.z + 1);
+				
+				//p5.point(pointA.x, pointA.y, pointA.z + 1);
+
+			}
+			p5.endShape();
+
+		}
+		
 	}
 	
 	@Deprecated
@@ -212,7 +244,7 @@ public class MapManager {
 	}
 
 	public void enableMouseInteraction(boolean state) {
-		p5.println("Map: Mouse Interaction: " + state);
+		//p5.println("Map: Mouse Interaction: " + state);
 		enableMouseInteraction = state;
 		if (enableMouseInteraction) {
 			eventDispatcher.register(map, PanMapEvent.TYPE_PAN, map.getId());

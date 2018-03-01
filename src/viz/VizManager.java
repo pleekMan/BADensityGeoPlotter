@@ -98,4 +98,9 @@ public class VizManager {
 		}
 		return locations;
 	}
+	
+	public void setNodeToMarkerDensityDistance(float distance){
+		grid.setDensityDistanceThreshold(distance * 0.1f);
+	}
+	
 }

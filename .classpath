@@ -27,5 +27,6 @@
 	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/jogl-all-natives-windows-i586.jar"/>
 	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/processing Core/P5 2.2.1/jogl-all.jar"/>
 	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/peasycam v2.0 (Processing 2)/library/peasycam.jar"/>
+	<classpathentry kind="lib" path="/Projects/EclipseWorkSpace/libraries/controlP5 2.2.5/library/controlP5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

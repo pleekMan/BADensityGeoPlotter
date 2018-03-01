@@ -30,7 +30,7 @@ public class Grid {
 		markerGeoLocations = new ArrayList<Location>();
 		screenLocations = new ArrayList<ScreenPosition>();
 
-		hRes = vRes = 50;
+		hRes = vRes = 100;
 		origin = new PVector();
 		size = new PVector();
 		distanceThreshold = 0.01f;
@@ -119,12 +119,36 @@ public class Grid {
 
 				float gridNodeToGeoDistance = p5.dist(gridNodes.get(i).x, gridNodes.get(i).y, markerX, markerY);
 				if (gridNodeToGeoDistance < distanceThreshold) {
-					gridNodes.get(i).z += 1;
+					gridNodes.get(i).z += 2;
 				}
 			}
 
 		}
 		p5.println("-|| GeoLocations.size() in Grid: " + markerGeoLocations.size());
+	}
+	
+	public void setDensityDistanceThreshold(float threshold){
+		distanceThreshold = threshold;
+		
+		for (int i = 0; i < gridNodes.size(); i++) {
+			
+			gridNodes.get(i).z = 0;
+
+			for (int j = 0; j < markerGeoLocations.size(); j++) {
+
+				float markerX = markerGeoLocations.get(j).getLon();
+				float markerY = markerGeoLocations.get(j).getLat();
+
+				float gridNodeToGeoDistance = p5.dist(gridNodes.get(i).x, gridNodes.get(i).y, markerX, markerY);
+				if (gridNodeToGeoDistance < distanceThreshold) {
+					gridNodes.get(i).z += 2;
+				}
+			}
+
+		}
+		
+		
+		
 	}
 
 	public void initScreenLocations(int count) {
@@ -147,5 +171,13 @@ public class Grid {
 
 	public void setSize(PVector size) {
 		this.size = size;
+	}
+
+	public int getHorizontalRes() {
+		return hRes;
+	}
+
+	public int getVerticalRes() {
+		return vRes;
 	}
 }
